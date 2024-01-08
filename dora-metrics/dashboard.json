@@ -1,0 +1,1978 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_POSTGRESQL",
+      "label": "PostgreSQL",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "postgres",
+      "pluginName": "PostgreSQL"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.4.7"
+    },
+    {
+      "type": "datasource",
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000005"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 21,
+      "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000005"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Aggregated metrics",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "description": "How often does a team successfully release its system:\n\n- Elite: on demand (multiple deployments per day)\n- High performers: between once per day and once per week\n- Medium performers: between once per week and once per month\n- Low performers: between once per month and once every six months",
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "mappings": [],
+          "max": 1.1,
+          "min": 0,
+          "noValue": "No data",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.03
+              },
+              {
+                "color": "green",
+                "value": 0.2
+              },
+              {
+                "color": "blue",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "id": 9,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "/^Succeeded$/",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 2,
+          "refId": "A"
+        }
+      ],
+      "title": "Average $build_types count per $group_by",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "description": "The amount of time it takes a commit to get into production:\n\n- Elite performers: less than one day\n- High performers: between one day and one week\n- Medium performers: between one week and one month\n- Low performers: between one month and six months",
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "mappings": [],
+          "min": 0,
+          "noValue": "No data",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1440
+              },
+              {
+                "color": "yellow",
+                "value": 10080
+              },
+              {
+                "color": "red",
+                "value": 43200
+              }
+            ]
+          },
+          "unit": "m"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
+      "id": 7,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "/^Commit delivery lead time$/",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 6,
+          "refId": "A"
+        }
+      ],
+      "title": "Average Commit Delivery Lead Time",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "description": "The percentage of deployments causing a failure:\n\n- Elite performers: 0-15%\n- High performers: 0-15%\n- Medium performers: 0-15%\n- Low performers: 40-60%",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "noValue": "No data",
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 15
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "id": 10,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "/^Failure rate$/",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 13,
+          "refId": "A"
+        }
+      ],
+      "title": "Average $build_types Failure Rate",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "description": "How long it takes to recover from a failure:\n\n- Elite performers: Less than an hour\n- High performers: Less than one day\n- Medium performers: Less than one day\n- Low performers: Between one week and one month",
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "mappings": [],
+          "max": 10080,
+          "min": 0,
+          "noValue": "No data",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 60
+              },
+              {
+                "color": "yellow",
+                "value": 1440
+              },
+              {
+                "color": "red",
+                "value": 10080
+              }
+            ]
+          },
+          "unit": "m"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "id": 8,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "/^Time to recover$/",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 11,
+          "refId": "A"
+        }
+      ],
+      "title": "Average $build_types MTTR",
+      "type": "gauge"
+    },
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000005"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 19,
+      "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000005"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Detailed metrics",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 12,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.03
+              },
+              {
+                "color": "green",
+                "value": 0.2
+              },
+              {
+                "color": "blue",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Failed"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Succeeded"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Succeeded Builds Frequency Trend"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Succeeded daily average"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 2,
+      "maxDataPoints": 30,
+      "options": {
+        "legend": {
+          "calcs": [
+            "sum",
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "0"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT \n  $__timeGroupAlias(build_date, $group_by), \n  SUM(normalized.succeeded) as \"Succeeded\",\n  SUM(normalized.failed) as \"Failed\",\n  AVG(SUM(normalized.succeeded)) OVER (ROWS 3 PRECEDING) AS \"Succeeded Builds Frequency Trend\"\nFROM(\n  SELECT\n    triggered_at::date as build_date,\n    SUM(CASE WHEN build_is_succeeded THEN 1 ELSE 0 END) AS succeeded,\n    SUM(CASE WHEN build_is_succeeded THEN 0 ELSE 1 END) AS failed\n  FROM build_run\n  WHERE (COALESCE($project) IS NULL OR project_key IN ($project))\n    AND (COALESCE($repository_group) IS NULL OR repository_group IN ($repository_group))\n    AND (COALESCE($repository_name) IS NULL OR repository_name IN ($repository_name))\n    AND (COALESCE($build_types) IS NULL OR (is_feature_branch_build AND 'Feature branch' IN ($build_types)) OR (is_integration_build AND 'Integration' IN ($build_types)) OR (is_deployment_build AND 'Deployment' IN ($build_types)))\n  GROUP BY 1\n  ORDER BY build_date\n) AS normalized\nGROUP BY 1\nORDER BY $__timeGroup(build_date, $group_by, 0)",
+          "refId": "All_builds",
+          "select": [
+            [
+              {
+                "params": [
+                  "build_duration_in_seconds"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Total"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "build_run",
+          "timeColumn": "triggered_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "repository_group",
+                "IN",
+                "($repository_group)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "$build_types Frequency by $group_by (the more - the better)",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 12,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              },
+              {
+                "color": "green",
+                "value": 1440
+              },
+              {
+                "color": "yellow",
+                "value": 10080
+              },
+              {
+                "color": "red",
+                "value": 43200
+              }
+            ]
+          },
+          "unit": "m"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Delivery Lead Time Trend"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "solid"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 6,
+      "maxDataPoints": 30,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "NULL"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT time, \n       \"Commit delivery lead time\",\n       AVG (\"Commit delivery lead time\") OVER (ROWS $points_to_average PRECEDING) AS \"Delivery Lead Time Trend\"\nFROM(\n  SELECT\n    $__timeGroupAlias(build_run.completed_at, $group_by),\n    AVG(EXTRACT(EPOCH FROM (build_run.completed_at-build_commit.commit_date))/60) AS \"Commit delivery lead time\"\n  FROM build_commit\n  INNER JOIN build_run on build_commit.build_run_id = build_run.build_run_id\n  WHERE (is_deployment_build OR is_lead_time_calculation_build)\n    AND build_is_succeeded\n    AND (COALESCE($project) IS NULL OR project_key IN ($project))   \n    AND (COALESCE($repository_group) IS NULL OR repository_group IN ($repository_group))\n    AND (COALESCE($repository_name) IS NULL OR repository_name IN ($repository_name))\n    AND (COALESCE($build_types) IS NULL OR (is_feature_branch_build AND 'Feature branch' IN ($build_types)) OR (is_integration_build AND 'Integration' IN ($build_types)) OR (is_deployment_build AND 'Deployment' IN ($build_types)))\n  GROUP BY 1\n  ORDER BY $__timeGroup(completed_at, $group_by, NULL)\n) AS normalized",
+          "refId": "Delivery lead time",
+          "select": [
+            [
+              {
+                "params": [
+                  "TIMESTAMPDIFF(MINUTE, build_commit.commit_date, build_run.completed_at)/60"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "avg"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "delivery_lead_time"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "build_run",
+          "timeColumn": "triggered_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "repository_group",
+                "IN",
+                "($repository_group)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "Commit Delivery Lead Time by $group_by (the less - the better)",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-orange",
+            "mode": "thresholds",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 12,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 15
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Failure Rate Trend"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Failure Rate Trend"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 39
+      },
+      "id": 13,
+      "maxDataPoints": 30,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "0"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT time, \"Failure rate\",\n       AVG (\"Failure rate\") OVER (ROWS $points_to_average PRECEDING) AS \"Failure Rate Trend\"\nFROM (\nSELECT\n  $__timeGroupAlias(triggered_at, $group_by),\n  SUM(CASE WHEN build_is_succeeded THEN 0 ELSE 1 END)*100/COUNT(*) AS \"Failure rate\"\nFROM build_run\nWHERE (COALESCE($project) IS NULL OR project_key IN ($project))   \n  AND (COALESCE($repository_group) IS NULL OR repository_group IN ($repository_group))\n  AND (COALESCE($repository_name) IS NULL OR repository_name IN ($repository_name))\n  AND (COALESCE($build_types) IS NULL OR (is_feature_branch_build AND 'Feature branch' IN ($build_types)) OR (is_integration_build AND 'Integration' IN ($build_types)) OR (is_deployment_build AND 'Deployment' IN ($build_types)))\nGROUP BY 1\nORDER BY $__timeGroup(triggered_at, $group_by, NULL)) AS normalized",
+          "refId": "All_builds",
+          "select": [
+            [
+              {
+                "params": [
+                  "build_duration_in_seconds"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Total"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "build_run",
+          "timeColumn": "triggered_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "repository_group",
+                "IN",
+                "($repository_group)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "$build_types builds Failure Rate by $group_by (the less - the better)",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "red",
+            "mode": "thresholds",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 12,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              },
+              {
+                "color": "green",
+                "value": 60
+              },
+              {
+                "color": "yellow",
+                "value": 1440
+              },
+              {
+                "color": "red",
+                "value": 10080
+              }
+            ]
+          },
+          "unit": "m"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time To Recover Trend"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 54
+      },
+      "id": 11,
+      "maxDataPoints": 30,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "NULL"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT time, \"Time to recover\",\n       AVG (\"Time to recover\") OVER (ROWS $points_to_average PRECEDING) AS \"Time To Recover Trend\"\nFROM(\nSELECT\n  $__timeGroupAlias(recovered_at, $group_by),\n  AVG(EXTRACT(EPOCH FROM(recovered_at-first_failed_at))/60) AS \"Time to recover\"\nFROM (\nSELECT project_key, repository_name, repository_group, branch_name, MIN(failed_build_number) as first_failure_number, MIN(failed_at) AS first_failed_at, recovered_at\nFROM (SELECT failed.project_key,\n             failed.repository_name,\n             failed.repository_group,\n             failed.branch_name,\n             failed.build_number AS failed_build_number,\n             failed.triggered_at AS failed_at,\n             MIN(succeeded.triggered_at) AS recovered_at\n        FROM build_run AS failed\n        INNER JOIN (SELECT * FROM build_run WHERE build_is_succeeded) as succeeded\n                ON succeeded.project_key = failed.project_key\n                AND succeeded.repository_name = failed.repository_name\n                AND succeeded.repository_group = failed.repository_group\n                AND succeeded.branch_name = failed.branch_name\n                AND succeeded.triggered_at > failed.triggered_at\n        WHERE (COALESCE($project) IS NULL OR failed.project_key IN ($project))   \n          AND (COALESCE($repository_group) IS NULL OR failed.repository_group IN ($repository_group))\n          AND (COALESCE($repository_name) IS NULL OR failed.repository_name IN ($repository_name))\n          AND (COALESCE($build_types) IS NULL OR (failed.is_feature_branch_build AND 'Feature branch' IN ($build_types)) OR (failed.is_integration_build AND 'Integration' IN ($build_types)) OR (failed.is_deployment_build AND 'Deployment' IN ($build_types)))\n          AND NOT failed.build_is_succeeded\n        GROUP BY failed.project_key, failed.repository_name, failed.repository_group, failed.branch_name, failed_build_number, failed_at\n        ORDER BY failed_at) AS failures_history\nGROUP BY project_key, repository_name, repository_group, branch_name, recovered_at\n) AS failures_history\nGROUP BY 1\nORDER BY $__timeGroup(recovered_at,$group_by, NULL)) as normalized",
+          "refId": "Delivery lead time",
+          "select": [
+            [
+              {
+                "params": [
+                  "TIMESTAMPDIFF(MINUTE, build_commit.commit_date, build_run.completed_at)/60"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "avg"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "delivery_lead_time"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "build_run",
+          "timeColumn": "triggered_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "repository_group",
+                "IN",
+                "($repository_group)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "$build_types builds MTTR by $group_by (the less - the better)",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000005"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 69
+      },
+      "id": 17,
+      "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000005"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Auxiliary data",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "project"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "${__data.fields.link}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "link"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 70
+      },
+      "id": 12,
+      "maxDataPoints": 30,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "count"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "completed at"
+          }
+        ]
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "0"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  CONCAT(project_key, ' ', repository_name, ' (', branch_name, ')') AS \"project\",\n  build_result AS \"result\",\n  CASE \n    WHEN is_deployment_build THEN 'Deployment'\n    WHEN is_integration_build THEN 'Integration'\n    WHEN is_lead_time_calculation_build THEN 'Lead Time calculation'\n    WHEN is_feature_branch_build THEN 'Feature branch'\n    ELSE '-' \n  END AS \"build type\",\n  completed_at AS \"completed at\",\n  build_run_id AS \"link\"\nFROM build_run\nWHERE\n  $__timeFilter(triggered_at) \n  AND (COALESCE($project) IS NULL OR project_key IN ($project))\n  AND (COALESCE($repository_group) IS NULL OR repository_group IN ($repository_group))\n  AND (COALESCE($repository_name) IS NULL OR repository_name IN ($repository_name))\n  AND (COALESCE($build_types) IS NULL OR (is_feature_branch_build AND 'Feature branch' IN ($build_types)) OR (is_integration_build AND 'Integration' IN ($build_types)) OR (is_deployment_build AND 'Deployment' IN ($build_types)))\nORDER BY $__timeGroup(triggered_at, $group_by, 0)",
+          "refId": "All_builds",
+          "select": [
+            [
+              {
+                "params": [
+                  "build_duration_in_seconds"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Total"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "build_run",
+          "timeColumn": "triggered_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "repository_group",
+                "IN",
+                "($repository_group)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "$build_types builds history",
+      "transformations": [],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-orange",
+            "mode": "fixed",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "points",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 12,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Avg Duration Trend"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.drawStyle",
+                "value": "line"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 85
+      },
+      "id": 15,
+      "maxDataPoints": 30,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "0"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(triggered_at, $group_by),\n  AVG(total_duration_in_seconds) AS \"Avg duration\",\n  AVG(AVG(total_duration_in_seconds)) OVER (ROWS 3 PRECEDING) AS \"Avg Duration Trend\"\nFROM build_run\nWHERE build_is_succeeded\n  AND (COALESCE($project) IS NULL OR project_key IN ($project))\n  AND (COALESCE($repository_group) IS NULL OR repository_group IN ($repository_group))\n  AND (COALESCE($repository_name) IS NULL OR repository_name IN ($repository_name))\n  AND (COALESCE($build_types) IS NULL OR (is_feature_branch_build AND 'Feature branch' IN ($build_types)) OR (is_integration_build AND 'Integration' IN ($build_types)) OR (is_deployment_build AND 'Deployment' IN ($build_types)))\nGROUP BY 1\nORDER BY $__timeGroup(triggered_at, $group_by, NULL)",
+          "refId": "All_builds",
+          "select": [
+            [
+              {
+                "params": [
+                  "build_duration_in_seconds"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Total"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "build_run",
+          "timeColumn": "triggered_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "repository_group",
+                "IN",
+                "($repository_group)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "$build_types pipeline average duration by $group_by",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Test name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 736
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Failed in builds"
+            },
+            "properties": [
+              {
+                "id": "custom.inspect",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 100
+      },
+      "id": 14,
+      "maxDataPoints": 30,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "0"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n    test_name AS \"Test name\",\n    COUNT(*) AS \"Total runs count\",\n    COUNT(CASE WHEN test_status IN ('FAILED', 'REGRESSION') THEN 1 ELSE NULL END) AS \"Failures count\",\n    STRING_AGG(DISTINCT CASE WHEN test_status IN ('FAILED', 'REGRESSION') THEN build_run.build_run_id ELSE '' END, '\\n') AS \"Failed in builds\",\n    AVG(test_duration) AS \"AVG duration\"\nFROM build_run\nINNER JOIN build_run_test ON build_run.build_run_id = build_run_test.build_run_id\nWHERE\n  $__timeFilter(triggered_at)\n  AND build_run_test.exclude_from_stats=False\n  AND (COALESCE($project) IS NULL OR project_key IN ($project))\n  AND (COALESCE($repository_group) IS NULL OR repository_group IN ($repository_group))\n  AND (COALESCE($repository_name) IS NULL OR repository_name IN ($repository_name))\n  AND (COALESCE($build_types) IS NULL OR (is_feature_branch_build AND 'Feature branch' IN ($build_types)) OR (is_integration_build AND 'Integration' IN ($build_types)) OR (is_deployment_build AND 'Deployment' IN ($build_types)))\nGROUP BY build_run_test.test_name\nORDER BY \"Failures count\" DESC",
+          "refId": "Test failures",
+          "select": [
+            [
+              {
+                "params": [
+                  "build_duration_in_seconds"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Total"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "build_run",
+          "timeColumn": "triggered_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "repository_group",
+                "IN",
+                "($repository_group)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "$build_types tests stats",
+      "transformations": [],
+      "type": "table"
+    }
+  ],
+  "refresh": false,
+  "revision": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": "NULL",
+        "current": {},
+        "datasource": {
+          "type": "postgres",
+          "uid": "${DS_POSTGRESQL}"
+        },
+        "definition": "SELECT DISTINCT (project_key) FROM build_run",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Project",
+        "multi": true,
+        "name": "project",
+        "options": [],
+        "query": "SELECT DISTINCT (project_key) FROM build_run",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": "NULL",
+        "current": {},
+        "datasource": {
+          "type": "postgres",
+          "uid": "${DS_POSTGRESQL}"
+        },
+        "definition": "SELECT DISTINCT (repository_group) \nFROM build_run \nWHERE COALESCE($project) IS NULL OR project_key IN ($project)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Repository group",
+        "multi": true,
+        "name": "repository_group",
+        "options": [],
+        "query": "SELECT DISTINCT (repository_group) \nFROM build_run \nWHERE COALESCE($project) IS NULL OR project_key IN ($project)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": "NULL",
+        "current": {},
+        "datasource": {
+          "type": "postgres",
+          "uid": "${DS_POSTGRESQL}"
+        },
+        "definition": "SELECT DISTINCT (repository_name) \nFROM build_run \nWHERE \n(COALESCE($project) IS NULL OR project_key IN ($project)) \nAND (COALESCE($repository_group) IS NULL OR repository_group IN ($repository_group))",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Repository name",
+        "multi": true,
+        "name": "repository_name",
+        "options": [],
+        "query": "SELECT DISTINCT (repository_name) \nFROM build_run \nWHERE \n(COALESCE($project) IS NULL OR project_key IN ($project)) \nAND (COALESCE($repository_group) IS NULL OR repository_group IN ($repository_group))",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": "NULL",
+        "current": {
+          "selected": false,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": "Build types",
+        "multi": true,
+        "name": "build_types",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "Feature branch",
+            "value": "Feature branch"
+          },
+          {
+            "selected": false,
+            "text": "Integration",
+            "value": "Integration"
+          },
+          {
+            "selected": false,
+            "text": "Deployment",
+            "value": "Deployment"
+          }
+        ],
+        "query": "Feature branch,Integration,Deployment",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "Days",
+          "value": "1d"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Group by",
+        "multi": false,
+        "name": "group_by",
+        "options": [
+          {
+            "selected": true,
+            "text": "Days",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "Weeks",
+            "value": "1w"
+          },
+          {
+            "selected": false,
+            "text": "Months",
+            "value": "1M"
+          },
+          {
+            "selected": false,
+            "text": "Quarters",
+            "value": "3M"
+          }
+        ],
+        "query": "Days : 1d,  Weeks : 1w, Months : 1M, Quarters : 3M",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "3",
+          "value": "3"
+        },
+        "hide": 0,
+        "label": "Points for trend calculation",
+        "name": "points_to_average",
+        "options": [
+          {
+            "selected": true,
+            "text": "3",
+            "value": "3"
+          }
+        ],
+        "query": "3",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
+  },
+  "time": {
+    "from": "2023-11-30T22:00:00.000Z",
+    "to": "2023-12-31T21:59:59.000Z"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "DORA metrics",
+  "uid": "a-6aCc37z",
+  "version": 4,
+  "weekStart": ""
+}
