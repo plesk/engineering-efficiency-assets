@@ -1,11 +1,11 @@
 {
   "__inputs": [
     {
-      "name": "DS_POSTGRESQL",
-      "label": "PostgreSQL",
+      "name": "DS_DORA_METRICS POSTGRESQL",
+      "label": "DORA metrics PostgreSQL",
       "description": "",
       "type": "datasource",
-      "pluginId": "postgres",
+      "pluginId": "grafana-postgresql-datasource",
       "pluginName": "PostgreSQL"
     }
   ],
@@ -21,11 +21,11 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "9.4.7"
+      "version": "10.4.0"
     },
     {
       "type": "datasource",
-      "id": "postgres",
+      "id": "grafana-postgresql-datasource",
       "name": "PostgreSQL",
       "version": "1.0.0"
     },
@@ -142,6 +142,8 @@
       },
       "id": 9,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -151,9 +153,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.0",
       "targets": [
         {
           "datasource": {
@@ -212,6 +215,8 @@
       },
       "id": 7,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -221,9 +226,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.0",
       "targets": [
         {
           "datasource": {
@@ -278,6 +284,8 @@
       },
       "id": 10,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -288,9 +296,10 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
+        "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.0",
       "targets": [
         {
           "datasource": {
@@ -350,6 +359,8 @@
       },
       "id": 8,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -359,9 +370,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.0",
       "targets": [
         {
           "datasource": {
@@ -403,8 +415,8 @@
     },
     {
       "datasource": {
-        "type": "postgres",
-        "uid": "${DS_POSTGRESQL}"
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DORA_METRICS POSTGRESQL}"
       },
       "fieldConfig": {
         "defaults": {
@@ -413,6 +425,7 @@
             "seriesBy": "last"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -426,6 +439,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 12,
@@ -530,6 +544,30 @@
                 }
               }
             ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Succeeded"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
           }
         ]
       },
@@ -560,8 +598,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "postgres",
-            "uid": "${DS_POSTGRESQL}"
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DORA_METRICS POSTGRESQL}"
           },
           "editorMode": "code",
           "format": "time_series",
@@ -640,13 +678,12 @@
         }
       ],
       "title": "$build_types Frequency by $group_by (the more - the better)",
-      "transformations": [],
       "type": "timeseries"
     },
     {
       "datasource": {
-        "type": "postgres",
-        "uid": "${DS_POSTGRESQL}"
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DORA_METRICS POSTGRESQL}"
       },
       "fieldConfig": {
         "defaults": {
@@ -655,6 +692,7 @@
             "seriesBy": "last"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -668,6 +706,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 12,
@@ -729,6 +768,30 @@
                 }
               }
             ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Delivery Lead Time Trend"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
           }
         ]
       },
@@ -756,8 +819,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "postgres",
-            "uid": "${DS_POSTGRESQL}"
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DORA_METRICS POSTGRESQL}"
           },
           "editorMode": "code",
           "format": "time_series",
@@ -836,13 +899,12 @@
         }
       ],
       "title": "Commit Delivery Lead Time by $group_by (the less - the better)",
-      "transformations": [],
       "type": "timeseries"
     },
     {
       "datasource": {
-        "type": "postgres",
-        "uid": "${DS_POSTGRESQL}"
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DORA_METRICS POSTGRESQL}"
       },
       "fieldConfig": {
         "defaults": {
@@ -852,6 +914,7 @@
             "seriesBy": "last"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -865,6 +928,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 12,
@@ -965,8 +1029,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "postgres",
-            "uid": "${DS_POSTGRESQL}"
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DORA_METRICS POSTGRESQL}"
           },
           "editorMode": "code",
           "format": "time_series",
@@ -1045,13 +1109,12 @@
         }
       ],
       "title": "$build_types builds Failure Rate by $group_by (the less - the better)",
-      "transformations": [],
       "type": "timeseries"
     },
     {
       "datasource": {
-        "type": "postgres",
-        "uid": "${DS_POSTGRESQL}"
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DORA_METRICS POSTGRESQL}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1061,6 +1124,7 @@
             "seriesBy": "last"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1074,6 +1138,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 12,
@@ -1129,6 +1194,30 @@
                 }
               }
             ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Time To Recover Trend"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
           }
         ]
       },
@@ -1156,8 +1245,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "postgres",
-            "uid": "${DS_POSTGRESQL}"
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DORA_METRICS POSTGRESQL}"
           },
           "editorMode": "code",
           "format": "time_series",
@@ -1236,7 +1325,6 @@
         }
       ],
       "title": "$build_types builds MTTR by $group_by (the less - the better)",
-      "transformations": [],
       "type": "timeseries"
     },
     {
@@ -1267,8 +1355,8 @@
     },
     {
       "datasource": {
-        "type": "postgres",
-        "uid": "${DS_POSTGRESQL}"
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DORA_METRICS POSTGRESQL}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1355,12 +1443,12 @@
           }
         ]
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.0",
       "targets": [
         {
           "datasource": {
-            "type": "postgres",
-            "uid": "${DS_POSTGRESQL}"
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DORA_METRICS POSTGRESQL}"
           },
           "editorMode": "code",
           "format": "table",
@@ -1439,13 +1527,12 @@
         }
       ],
       "title": "$build_types builds history",
-      "transformations": [],
       "type": "table"
     },
     {
       "datasource": {
-        "type": "postgres",
-        "uid": "${DS_POSTGRESQL}"
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DORA_METRICS POSTGRESQL}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1455,6 +1542,7 @@
             "seriesBy": "last"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1468,6 +1556,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 12,
@@ -1543,8 +1632,8 @@
       "targets": [
         {
           "datasource": {
-            "type": "postgres",
-            "uid": "${DS_POSTGRESQL}"
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DORA_METRICS POSTGRESQL}"
           },
           "editorMode": "code",
           "format": "time_series",
@@ -1623,13 +1712,197 @@
         }
       ],
       "title": "$build_types pipeline average duration by $group_by",
-      "transformations": [],
       "type": "timeseries"
     },
     {
       "datasource": {
-        "type": "postgres",
-        "uid": "${DS_POSTGRESQL}"
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DORA_METRICS POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-orange",
+            "mode": "fixed",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "points",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 12,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Avg Duration Trend"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.drawStyle",
+                "value": "line"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 100
+      },
+      "id": 22,
+      "maxDataPoints": 30,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DORA_METRICS POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "0"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(triggered_at, $group_by),\n  AVG(wait_duration_in_seconds) AS \"Avg wait time\",\n  AVG(AVG(wait_duration_in_seconds)) OVER (ROWS 3 PRECEDING) AS \"Avg wait time Trend\"\nFROM build_run\nWHERE build_is_succeeded \n  AND wait_duration_in_seconds IS NOT NULL\n  AND (COALESCE($project) IS NULL OR project_key IN ($project))\n  AND (COALESCE($repository_group) IS NULL OR repository_group IN ($repository_group))\n  AND (COALESCE($repository_name) IS NULL OR repository_name IN ($repository_name))\n  AND (COALESCE($build_types) IS NULL OR (is_feature_branch_build AND 'Feature branch' IN ($build_types)) OR (is_integration_build AND 'Integration' IN ($build_types)) OR (is_deployment_build AND 'Deployment' IN ($build_types)))\nGROUP BY 1\nORDER BY $__timeGroup(triggered_at, $group_by, NULL)",
+          "refId": "All_builds",
+          "select": [
+            [
+              {
+                "params": [
+                  "build_duration_in_seconds"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Total"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "build_run",
+          "timeColumn": "triggered_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "repository_group",
+                "IN",
+                "($repository_group)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "$build_types pipeline average wait time by $group_by",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DORA_METRICS POSTGRESQL}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1666,7 +1939,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 736
+                "value": 911
               }
             ]
           },
@@ -1681,6 +1954,18 @@
                 "value": true
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Flakiness rate"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percentunit"
+              }
+            ]
           }
         ]
       },
@@ -1688,7 +1973,7 @@
         "h": 15,
         "w": 24,
         "x": 0,
-        "y": 100
+        "y": 115
       },
       "id": 14,
       "maxDataPoints": 30,
@@ -1702,14 +1987,19 @@
           "show": false
         },
         "showHeader": true,
-        "sortBy": []
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Flakiness rate"
+          }
+        ]
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "10.4.0",
       "targets": [
         {
           "datasource": {
-            "type": "postgres",
-            "uid": "${DS_POSTGRESQL}"
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DORA_METRICS POSTGRESQL}"
           },
           "editorMode": "code",
           "format": "table",
@@ -1724,7 +2014,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n    test_name AS \"Test name\",\n    COUNT(*) AS \"Total runs count\",\n    COUNT(CASE WHEN test_status IN ('FAILED', 'REGRESSION') THEN 1 ELSE NULL END) AS \"Failures count\",\n    STRING_AGG(DISTINCT CASE WHEN test_status IN ('FAILED', 'REGRESSION') THEN build_run.build_run_id ELSE '' END, '\\n') AS \"Failed in builds\",\n    AVG(test_duration) AS \"AVG duration\"\nFROM build_run\nINNER JOIN build_run_test ON build_run.build_run_id = build_run_test.build_run_id\nWHERE\n  $__timeFilter(triggered_at)\n  AND build_run_test.exclude_from_stats=False\n  AND (COALESCE($project) IS NULL OR project_key IN ($project))\n  AND (COALESCE($repository_group) IS NULL OR repository_group IN ($repository_group))\n  AND (COALESCE($repository_name) IS NULL OR repository_name IN ($repository_name))\n  AND (COALESCE($build_types) IS NULL OR (is_feature_branch_build AND 'Feature branch' IN ($build_types)) OR (is_integration_build AND 'Integration' IN ($build_types)) OR (is_deployment_build AND 'Deployment' IN ($build_types)))\nGROUP BY build_run_test.test_name\nORDER BY \"Failures count\" DESC",
+          "rawSql": "SELECT\n    test_name AS \"Test name\",\n    COUNT(*) AS \"Total runs count\",\n    COUNT(CASE WHEN test_status IN ('FAILED', 'REGRESSION') THEN 1 ELSE NULL END) AS \"Failures count\",\n    COUNT(CASE WHEN test_status IN ('FAILED', 'REGRESSION') THEN 1 ELSE NULL END)::decimal/COUNT(*) AS \"Flakiness rate\",\n    STRING_AGG(DISTINCT CASE WHEN test_status IN ('FAILED', 'REGRESSION') THEN build_run.build_run_id ELSE '' END, '\\n') AS \"Failed in builds\",\n    AVG(test_duration) AS \"AVG duration\"\nFROM build_run\nINNER JOIN build_run_test ON build_run.build_run_id = build_run_test.build_run_id\nWHERE\n  $__timeFilter(triggered_at)\n  AND build_run_test.exclude_from_stats=False\n  AND (COALESCE($project) IS NULL OR project_key IN ($project))\n  AND (COALESCE($repository_group) IS NULL OR repository_group IN ($repository_group))\n  AND (COALESCE($repository_name) IS NULL OR repository_name IN ($repository_name))\n  AND (COALESCE($build_types) IS NULL OR (is_feature_branch_build AND 'Feature branch' IN ($build_types)) OR (is_integration_build AND 'Integration' IN ($build_types)) OR (is_deployment_build AND 'Deployment' IN ($build_types)))\nGROUP BY build_run_test.test_name\nORDER BY \"Failures count\" DESC",
           "refId": "Test failures",
           "select": [
             [
@@ -1788,14 +2078,12 @@
         }
       ],
       "title": "$build_types tests stats",
-      "transformations": [],
       "type": "table"
     }
   ],
-  "refresh": false,
+  "refresh": "",
   "revision": 1,
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
@@ -1803,8 +2091,8 @@
         "allValue": "NULL",
         "current": {},
         "datasource": {
-          "type": "postgres",
-          "uid": "${DS_POSTGRESQL}"
+          "type": "grafana-postgresql-datasource",
+          "uid": "${DS_DORA_METRICS POSTGRESQL}"
         },
         "definition": "SELECT DISTINCT (project_key) FROM build_run",
         "hide": 0,
@@ -1824,8 +2112,8 @@
         "allValue": "NULL",
         "current": {},
         "datasource": {
-          "type": "postgres",
-          "uid": "${DS_POSTGRESQL}"
+          "type": "grafana-postgresql-datasource",
+          "uid": "${DS_DORA_METRICS POSTGRESQL}"
         },
         "definition": "SELECT DISTINCT (repository_group) \nFROM build_run \nWHERE COALESCE($project) IS NULL OR project_key IN ($project)",
         "hide": 0,
@@ -1845,8 +2133,8 @@
         "allValue": "NULL",
         "current": {},
         "datasource": {
-          "type": "postgres",
-          "uid": "${DS_POSTGRESQL}"
+          "type": "grafana-postgresql-datasource",
+          "uid": "${DS_DORA_METRICS POSTGRESQL}"
         },
         "definition": "SELECT DISTINCT (repository_name) \nFROM build_run \nWHERE \n(COALESCE($project) IS NULL OR project_key IN ($project)) \nAND (COALESCE($repository_group) IS NULL OR repository_group IN ($repository_group))",
         "hide": 0,
@@ -1865,12 +2153,12 @@
       {
         "allValue": "NULL",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
-            "All"
+            "Deployment"
           ],
           "value": [
-            "$__all"
+            "Deployment"
           ]
         },
         "hide": 0,
@@ -1880,7 +2168,7 @@
         "name": "build_types",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "All",
             "value": "$__all"
           },
@@ -1895,7 +2183,7 @@
             "value": "Integration"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "Deployment",
             "value": "Deployment"
           }
@@ -1908,8 +2196,8 @@
       {
         "current": {
           "selected": false,
-          "text": "Days",
-          "value": "1d"
+          "text": "Months",
+          "value": "1M"
         },
         "hide": 0,
         "includeAll": false,
@@ -1918,7 +2206,7 @@
         "name": "group_by",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "Days",
             "value": "1d"
           },
@@ -1928,7 +2216,7 @@
             "value": "1w"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "Months",
             "value": "1M"
           },
@@ -1966,13 +2254,13 @@
     ]
   },
   "time": {
-    "from": "2023-11-30T22:00:00.000Z",
-    "to": "2023-12-31T21:59:59.000Z"
+    "from": "now-6M",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "DORA metrics",
   "uid": "a-6aCc37z",
-  "version": 4,
+  "version": 304,
   "weekStart": ""
 }

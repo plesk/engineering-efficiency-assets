@@ -7,6 +7,7 @@ create table public.build_run
     branch_name                    varchar(128)             not null,
     total_duration_in_seconds      integer,
     tests_duration_in_seconds      integer,
+    wait_duration_in_seconds       integer,
     build_number                   integer,
     build_result                   varchar(32)              not null,
     build_is_succeeded             boolean,
