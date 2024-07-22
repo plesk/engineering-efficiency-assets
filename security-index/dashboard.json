@@ -1,0 +1,2654 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_DEFECTDOJO_DB",
+      "label": "DefectDojo DB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "grafana-postgresql-datasource",
+      "pluginName": "PostgreSQL"
+    },
+    {
+      "name": "VAR_DEFECT_DOJO_URL",
+      "type": "constant",
+      "label": "defect_dojo_url",
+      "value": "https://demo.defectdojo.org/",
+      "description": ""
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.4.0"
+    },
+    {
+      "type": "datasource",
+      "id": "grafana-postgresql-datasource",
+      "name": "PostgreSQL",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "orange",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 19,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 11,
+          "refId": "A"
+        }
+      ],
+      "title": "Currently active findings",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "Active findings count"
+              ],
+              "reducer": "last"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DEFECTDOJO_DB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "orange",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Delta"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 0
+                    },
+                    {
+                      "color": "green",
+                      "value": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "color"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 4,
+        "y": 0
+      },
+      "id": 27,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": false
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DEFECTDOJO_DB}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT \"Resolved findings\", \"Created findings\", \"Resolved findings\"-\"Created findings\" AS \"Delta\" \nFROM\n    (SELECT COALESCE(COUNT(*), 0) as \"Created findings\"\n    FROM security_dashboard_data\n    WHERE $__timeFilter(created)\n        AND (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n        AND (COALESCE($product) IS NULL OR product_id IN ($product))\n        AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\n        AND (COALESCE($component) IS NULL OR ('--no component--' IN ($component) AND component_name IS NULL) OR component_name IN ($component)) \n        AND (COALESCE($tool) IS NULL OR test_type_id IN ($tool))\n        AND (COALESCE($severity) IS NULL OR severity IN ($severity))) AS index_growth\nJOIN \n    (SELECT COALESCE(COUNT(*), 0) AS \"Resolved findings\"\n    FROM security_dashboard_data\n    WHERE active = False\n        AND $__timeFilter(last_handle_date)\n        AND (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n        AND (COALESCE($product) IS NULL OR product_id IN ($product))\n        AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\n        AND (COALESCE($component) IS NULL OR ('--no component--' IN ($component) AND component_name IS NULL) OR component_name IN ($component)) \n        AND (COALESCE($tool) IS NULL OR test_type_id IN ($tool))\n        AND (COALESCE($severity) IS NULL OR severity IN ($severity))) AS index_reduction\nON 1=1",
+          "refId": "Growth",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Resolved vs created dynamics for  ${__from:date:YYYY.MM.DD} - ${__to:date:YYYY.MM.DD}",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "description": "A summary index calculated as the number of findings multiplied by their \"severity weight\". Severity weights are the following:\n- Critical = 1000\n- High = 100\n- Medium = 10\n- Low, Info = 1",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 0
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^Vulnerability index$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 11,
+          "refId": "A"
+        }
+      ],
+      "title": "Current vulnerability index",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DEFECTDOJO_DB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Delta"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 0
+                    },
+                    {
+                      "color": "green",
+                      "value": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "color"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 24,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": false
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DEFECTDOJO_DB}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT \"Index reduction\", \"Index growth\", \"Index reduction\"-\"Index growth\" AS \"Delta\" \nFROM\n    (SELECT COALESCE(SUM(severity_weight), 0) as \"Index growth\"\n    FROM security_dashboard_data\n    WHERE $__timeFilter(created)\n        AND (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n        AND (COALESCE($product) IS NULL OR product_id IN ($product))\n        AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\n        AND (COALESCE($component) IS NULL OR ('--no component--' IN ($component) AND component_name IS NULL) OR component_name IN ($component)) \n        AND (COALESCE($tool) IS NULL OR test_type_id IN ($tool))\n        AND (COALESCE($severity) IS NULL OR severity IN ($severity))) AS index_growth\nJOIN \n    (SELECT COALESCE(SUM(severity_weight), 0) AS \"Index reduction\"\n    FROM security_dashboard_data\n    WHERE active = False\n        AND $__timeFilter(last_handle_date)\n        AND (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n        AND (COALESCE($product) IS NULL OR product_id IN ($product))\n        AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\n        AND (COALESCE($component) IS NULL OR ('--no component--' IN ($component) AND component_name IS NULL) OR component_name IN ($component)) \n        AND (COALESCE($tool) IS NULL OR test_type_id IN ($tool))\n        AND (COALESCE($severity) IS NULL OR severity IN ($severity))) AS index_reduction\nON 1=1",
+          "refId": "Growth",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Vulnerability index dynamics for  ${__from:date:YYYY.MM.DD} - ${__to:date:YYYY.MM.DD}",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DEFECTDOJO_DB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "red",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Resolved findings count"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Vulnerability index"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-blue",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Active findings count"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Vulnerability index cumulation"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-red",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Vulnerability index remediation"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-green",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Vulnerability index",
+                  "Active findings count"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": true,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "min",
+            "last"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DEFECTDOJO_DB}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT\n    COALESCE(handled.time, created.time) AS time,\n    \n    SUM(COALESCE(index_increment, 0)) OVER(ORDER BY COALESCE(created.time, handled.time) ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS \"Vulnerability index cumulation\",\n    SUM(COALESCE(index_decrement, 0)) OVER(ORDER BY COALESCE(handled.time, created.time) ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS \"Vulnerability index remediation\",\n    \n    SUM(COALESCE(index_increment, 0)) OVER(ORDER BY COALESCE(created.time, handled.time) ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) -\n    SUM(COALESCE(index_decrement, 0)) OVER(ORDER BY COALESCE(handled.time, created.time) ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS \"Vulnerability index\",\n\n\n    SUM(COALESCE(handled_count,0)) OVER(ORDER BY COALESCE(handled.time, created.time) ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS \"Resolved findings count\",\n    SUM(COALESCE(created_count,0)) OVER(ORDER BY COALESCE(created.time, handled.time) ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS \"Created findings count\",\n    SUM(COALESCE(created_count,0)) OVER(ORDER BY COALESCE(created.time, handled.time) ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) \n        - SUM(COALESCE(handled_count,0)) OVER(ORDER BY COALESCE(handled.time, created.time) ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS \"Active findings count\"\n\nFROM\n    (SELECT\n         $__timeGroupAlias(last_handle_date, $group_by),\n         COUNT(*) AS handled_count,\n         SUM(severity_weight) AS index_decrement\n     FROM security_dashboard_data\n     WHERE \n        active = False\n        AND (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n        AND (COALESCE($product) IS NULL OR product_id IN ($product)) \n        AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service)) \n        AND (COALESCE($component) IS NULL OR ('--no component--' IN ($component) AND component_name IS NULL) OR component_name IN ($component)) \n        AND (COALESCE($tool) IS NULL OR test_type_id IN ($tool)) \n        AND (COALESCE($severity) IS NULL OR severity IN ($severity))\n     GROUP BY 1) AS handled\n        FULL JOIN\n    (SELECT\n         $__timeGroupAlias(created, $group_by),\n         COUNT(*) AS created_count,\n         SUM(severity_weight) AS index_increment\n     FROM security_dashboard_data\n     WHERE (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n        AND (COALESCE($product) IS NULL OR product_id IN ($product)) \n        AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service)) \n        AND (COALESCE($component) IS NULL OR ('--no component--' IN ($component) AND component_name IS NULL) OR component_name IN ($component)) \n        AND (COALESCE($tool) IS NULL OR test_type_id IN ($tool)) \n        AND (COALESCE($severity) IS NULL OR severity IN ($severity))\n     GROUP BY 1) AS created\n    ON handled.time = created.time\nWHERE COALESCE(handled.time, created.time) IS NOT NULL",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Findings statistics for ${__from:date:YYYY.MM.DD} - ${__to:date:YYYY.MM.DD}",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DEFECTDOJO_DB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "title"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View finding in DefectDojo",
+                    "url": "${defect_dojo_url}/finding/${__data.fields.id}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 416
+              },
+              {
+                "id": "custom.inspect",
+                "value": true
+              },
+              {
+                "id": "displayName",
+                "value": "Title"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "file_path"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View source file",
+                    "url": "${__data.fields.source_code_management_uri}/${__data.fields.file_path}#${__data.fields.line_number}"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "File path"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "source_code_management_uri"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "line_number"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "product_name"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all findings in ${__data.fields.product_name} product in DefectDojo",
+                    "url": "${defect_dojo_url}/product/${__data.fields.product_id}/finding/open"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "Product"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "product_id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "service"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all findings in ${__data.fields.service} repository",
+                    "url": "${defect_dojo_url}/product/${__data.fields.product_id}/finding/open?service=${__data.fields.service}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 266
+              },
+              {
+                "id": "displayName",
+                "value": "Repository"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "description"
+            },
+            "properties": [
+              {
+                "id": "custom.inspect",
+                "value": true
+              },
+              {
+                "id": "custom.width",
+                "value": 251
+              },
+              {
+                "id": "displayName",
+                "value": "Description"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cve"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all closed findings for ${__data.fields.cve}",
+                    "url": "${defect_dojo_url}/finding/open?test__engagement__product__prod_type=${__data.fields.product_type_id}&vulnerability_id=${__data.fields.cve}"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "CVE"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "severity_weight"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 97
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "super-light-blue",
+                        "index": 4,
+                        "text": "Info"
+                      },
+                      "1": {
+                        "color": "super-light-purple",
+                        "index": 3,
+                        "text": "Low"
+                      },
+                      "10": {
+                        "color": "super-light-yellow",
+                        "index": 2,
+                        "text": "Medium"
+                      },
+                      "100": {
+                        "color": "super-light-orange",
+                        "index": 1,
+                        "text": "High"
+                      },
+                      "1000": {
+                        "color": "super-light-red",
+                        "index": 0,
+                        "text": "Critical"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "displayName",
+                "value": "Severity"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time to fix by SLA"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "light-red",
+                      "value": null
+                    },
+                    {
+                      "color": "transparent",
+                      "value": 0
+                    },
+                    {
+                      "color": "light-yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "light-green",
+                      "value": 604800
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.hidden",
+                "value": false
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 170
+              },
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "component_name"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Component"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all findings for ${__data.fields.component_name} component",
+                    "url": "${defect_dojo_url}/product/${__data.fields.product_id}/finding/open?component_name=${__data.fields.component_name}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "created"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Created"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "test_type_name"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Tool"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all active findings from ${__data.fields.test_type_name}",
+                    "url": "${defect_dojo_url}/product/${__data.fields.product_id}/finding/open?test__test_type=${__data.fields.test_type_id}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "product_type_id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "test_type_id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 20,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": [
+            "severity_weight"
+          ],
+          "reducer": [
+            "sum"
+          ],
+          "show": true
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DEFECTDOJO_DB}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \n    title,\n    severity_weight,\n    COALESCE(EXTRACT(EPOCH FROM (created + make_interval(days => days_to_fix_by_sla))-current_timestamp), 0) AS \"Time to fix by SLA\",\n    description,\n    service,\n    file_path,\n    component_name,\n    test_type_id,\n    test_type_name,\n    cve,\n    product_id,\n    product_name,\n    created,\n    id,\n    source_code_management_uri,\n    line_number,\n    product_type_id\nFROM security_dashboard_data\nWHERE active = True\n    AND (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n    AND (COALESCE($product) IS NULL OR product_id IN ($product))\n    AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\n    AND (COALESCE($component) IS NULL OR ('--no component--' IN ($component) AND component_name IS NULL) OR component_name IN ($component)) \n    AND (COALESCE($tool) IS NULL OR test_type_id IN ($tool))\n    AND (COALESCE($severity) IS NULL OR severity IN ($severity))\nORDER BY created DESC",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Active findings",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DEFECTDOJO_DB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 43200
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mitigated_findings_age"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Mitigated findings age"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mitigated_findings_count"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Mitigated findings count"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 35
+      },
+      "id": 26,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DEFECTDOJO_DB}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT DATE_TRUNC('MONTH', created) AS time, \nCOUNT(*) AS mitigated_findings_count,\nAVG(EXTRACT(epoch from last_handle_date::timestamp - created::timestamp)) as mitigated_findings_age\nFROM security_dashboard_data\nWHERE active = False\n    AND $__timeFilter(created)\n    AND (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n    AND (COALESCE($product) IS NULL OR product_id IN ($product))\n    AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\n    AND (COALESCE($component) IS NULL OR ('--no component--' IN ($component) AND component_name IS NULL) OR component_name IN ($component)) \n    AND (COALESCE($tool) IS NULL OR test_type_id IN ($tool))\n    AND (COALESCE($severity) IS NULL OR severity IN ($severity))\nGROUP BY time\nORDER BY time DESC",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Average remediation time by finding date",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DEFECTDOJO_DB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 43200
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 0,
+        "y": 41
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DEFECTDOJO_DB}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT EXTRACT(epoch from CURRENT_DATE::timestamp - created::timestamp) as finding_age\nFROM security_dashboard_data\nWHERE active = True\n    AND (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n    AND (COALESCE($product) IS NULL OR product_id IN ($product))\n    AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\n    AND (COALESCE($component) IS NULL OR ('--no component--' IN ($component) AND component_name IS NULL) OR component_name IN ($component)) \n    AND (COALESCE($tool) IS NULL OR test_type_id IN ($tool))\n    AND (COALESCE($severity) IS NULL OR severity IN ($severity))\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Average active finding age for ${__from:date:YYYY.MM.DD HH:mm:SS} - ${__to:date:YYYY.MM.DD HH:mm:SS}",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DEFECTDOJO_DB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 43200
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 12,
+        "y": 41
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DEFECTDOJO_DB}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT EXTRACT(epoch from last_handle_date::timestamp - created::timestamp) as finding_age\nFROM security_dashboard_data\nWHERE active = False\n    AND $__timeFilter(last_handle_date)\n    AND (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n    AND (COALESCE($product) IS NULL OR product_id IN ($product))\n    AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\n    AND (COALESCE($component) IS NULL OR ('--no component--' IN ($component) AND component_name IS NULL) OR component_name IN ($component)) \n    AND (COALESCE($tool) IS NULL OR test_type_id IN ($tool))\n    AND (COALESCE($severity) IS NULL OR severity IN ($severity))",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Average finding remediation time for ${__from:date:YYYY.MM.DD HH:mm:SS} - ${__to:date:YYYY.MM.DD HH:mm:SS}",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DEFECTDOJO_DB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 44
+      },
+      "id": 22,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "horizontal",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DEFECTDOJO_DB}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \n    cve,\n    SUM(severity_weight) as index_contribution\nFROM security_dashboard_data\nWHERE active = True AND cve IS NOT NULL\n    AND (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n    AND (COALESCE($product) IS NULL OR product_id IN ($product))\n    AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\n    AND (COALESCE($component) IS NULL OR ('--no component--' IN ($component) AND component_name IS NULL) OR component_name IN ($component)) \n    AND (COALESCE($tool) IS NULL OR test_type_id IN ($tool))\n    AND (COALESCE($severity) IS NULL OR severity IN ($severity))\nGROUP BY cve\nORDER BY index_contribution DESC\nLIMIT 20",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Top 20 CVE by index contribution",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DEFECTDOJO_DB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "title"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View finding in DefectDojo",
+                    "url": "${defect_dojo_url}/finding/${__data.fields.id}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 416
+              },
+              {
+                "id": "custom.inspect",
+                "value": true
+              },
+              {
+                "id": "displayName",
+                "value": "Title"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "file_path"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View source file",
+                    "url": "${__data.fields.source_code_management_uri}/${__data.fields.file_path}#${__data.fields.line_number}"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "File path"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "source_code_management_uri"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "line_number"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "product_name"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all findings in ${__data.fields.product_name} product in DefectDojo",
+                    "url": "${defect_dojo_url}/product/${__data.fields.product_id}/finding/open"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "Product"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "product_id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "repository"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all findings in ${__data.fields.repository} repository",
+                    "url": "${defect_dojo_url}/product/${__data.fields.product_id}/finding/open?service=${__data.fields.repository}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 266
+              },
+              {
+                "id": "displayName",
+                "value": "Repository"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "description"
+            },
+            "properties": [
+              {
+                "id": "custom.inspect",
+                "value": true
+              },
+              {
+                "id": "custom.width",
+                "value": 251
+              },
+              {
+                "id": "displayName",
+                "value": "Description"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cve"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all findings for ${__data.fields.cve}",
+                    "url": "${defect_dojo_url}/finding/open?test__engagement__product__prod_type=${__data.fields.product_type_id}&vulnerability_id=${__data.fields.cve}"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "CVE"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "severity_weight"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 97
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "super-light-blue",
+                        "index": 4,
+                        "text": "Info"
+                      },
+                      "1": {
+                        "color": "super-light-purple",
+                        "index": 3,
+                        "text": "Low"
+                      },
+                      "10": {
+                        "color": "super-light-yellow",
+                        "index": 2,
+                        "text": "Medium"
+                      },
+                      "100": {
+                        "color": "super-light-orange",
+                        "index": 1,
+                        "text": "High"
+                      },
+                      "1000": {
+                        "color": "super-light-red",
+                        "index": 0,
+                        "text": "Critical"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "displayName",
+                "value": "Severity"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time to fix by SLA"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "light-red"
+                    },
+                    {
+                      "color": "transparent",
+                      "value": 0
+                    },
+                    {
+                      "color": "light-yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "light-green",
+                      "value": 604800
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.hidden",
+                "value": false
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 170
+              },
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "component_name"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Component"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all findings for ${__data.fields.component_name} component",
+                    "url": "${defect_dojo_url}/product/${__data.fields.product_id}/finding/open?component_name=${__data.fields.component_name}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "created"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Created"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "test_type_name"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Tool"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all active findings from ${__data.fields.test_type_name}",
+                    "url": "${defect_dojo_url}/product/${__data.fields.product_id}/finding/open?test__test_type=${__data.fields.test_type_id}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "product_type_id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "test_type_id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Description"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 900
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 59
+      },
+      "id": 25,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": [
+            "severity_weight"
+          ],
+          "reducer": [
+            "sum"
+          ],
+          "show": true
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Time to fix by SLA"
+          }
+        ]
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DEFECTDOJO_DB}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \n    title,\n    severity_weight,\n    COALESCE(EXTRACT(EPOCH FROM (created + make_interval(days => days_to_fix_by_sla))-current_timestamp), 0) AS \"Time to fix by SLA\",\n    description,\n    service as repository,\n    file_path,\n    component_name,\n    test_type_name,\n    test_type_id,\n    cve,\n    product_id,\n    product_name,\n    created,\n    id,\n    source_code_management_uri,\n    line_number,\n    product_type_id\nFROM security_dashboard_data\nWHERE active=True \n    AND $__timeFilter(created)\n    AND (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n    AND (COALESCE($product) IS NULL OR product_id IN ($product))\n    AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\n    AND (COALESCE($component) IS NULL OR ('--no component--' IN ($component) AND component_name IS NULL) OR component_name IN ($component)) \n    AND (COALESCE($tool) IS NULL OR test_type_id IN ($tool))\n    AND (COALESCE($severity) IS NULL OR severity IN ($severity))\nORDER BY created DESC",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Active findings opened during ${__from:date:YYYY.MM.DD HH:mm:SS} to ${__to:date:YYYY.MM.DD HH:mm:SS}",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_DEFECTDOJO_DB}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#96d98d42",
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "mode": "basic",
+              "type": "color-background"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "title"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View finding in DefectDojo",
+                    "url": "${defect_dojo_url}/finding/${__data.fields.id}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 416
+              },
+              {
+                "id": "custom.inspect",
+                "value": true
+              },
+              {
+                "id": "displayName",
+                "value": "Title"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "product_name"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all closed findings in ${__data.fields.product_name} product in DefectDojo",
+                    "url": "${defect_dojo_url}/product/${__data.fields.product_id}/finding/closed"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "Product"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "product_id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "service"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all closed findings in ${__data.fields.service} repository",
+                    "url": "${defect_dojo_url}/product/${__data.fields.product_id}/finding/closed?service=${__data.fields.service}"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "Repository"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "description"
+            },
+            "properties": [
+              {
+                "id": "custom.inspect",
+                "value": true
+              },
+              {
+                "id": "displayName",
+                "value": "Description"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "severity_weight"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Severity"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "super-light-blue",
+                        "index": 4,
+                        "text": "Info"
+                      },
+                      "1": {
+                        "color": "super-light-purple",
+                        "index": 3,
+                        "text": "Low"
+                      },
+                      "10": {
+                        "color": "super-light-yellow",
+                        "index": 2,
+                        "text": "Medium"
+                      },
+                      "100": {
+                        "color": "super-light-orange",
+                        "index": 1,
+                        "text": "High"
+                      },
+                      "1000": {
+                        "color": "super-light-red",
+                        "index": 0,
+                        "text": "Critical"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last_handle_date"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Resolution date"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "resolution_status"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Resolution status"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mitigated_by"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Mitigated by"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "test_type_name"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Tool"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all closed findings from ${__data.fields.test_type_name}",
+                    "url": "${defect_dojo_url}/product/${__data.fields.product_id}/finding/closed?test__test_type=${__data.fields.test_type_id}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "component_name"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Component"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "View all closed findings for ${__data.fields.component_name} component",
+                    "url": "${defect_dojo_url}/product/${__data.fields.product_id}/finding/closed?component_name=${__data.fields.component_name}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cve"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "CVE"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "View all closed findings for ${__data.fields.cve}",
+                    "url": "${defect_dojo_url}/finding/closed?test__engagement__product__prod_type=${__data.fields.product_type_id}&vulnerability_id=${__data.fields.cve}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "created"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Created"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "test_type_id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tool"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 292
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 74
+      },
+      "id": 9,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": [
+            "severity_weight"
+          ],
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Tool"
+          }
+        ]
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_DEFECTDOJO_DB}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \n    title,\n    severity_weight,\n    test_type_name,\n    test_type_id,\n    mitigated_by,\n    last_handle_date,\n    resolution_status,\n    description,\n    cve,\n    product_id,\n    product_name,\n    service,\n    component_name,\n    created,\n    id\nFROM security_dashboard_data\nWHERE active = False\n    AND $__timeFilter(last_handle_date)\n    AND (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n    AND (COALESCE($product) IS NULL OR product_id IN ($product))\n    AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\n    AND (COALESCE($component) IS NULL OR ('--no component--' IN ($component) AND component_name IS NULL) OR component_name IN ($component)) \n    AND (COALESCE($tool) IS NULL OR test_type_id IN ($tool))\n    AND (COALESCE($severity) IS NULL OR severity IN ($severity))\nORDER BY last_handle_date DESC",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Findings handled during ${__from:date:YYYY.MM.DD HH:mm:SS} - ${__to:date:YYYY.MM.DD HH:mm:SS}",
+      "type": "table"
+    }
+  ],
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": "NULL",
+        "current": {},
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "${DS_DEFECTDOJO_DB}"
+        },
+        "definition": "SELECT \n   product_type_id  AS __value,\n   CONCAT(product_type_name, ' (', SUM(case when active then 1 ELSE 0 end), ' active findings, ', SUM(case when active then severity_weight ELSE 0 end), ' index points)') AS __text\nFROM security_dashboard_data\nGROUP BY product_type_id, product_type_name\nORDER BY SUM(case when active then severity_weight ELSE 0 end) DESC",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Product type",
+        "multi": true,
+        "name": "product_type",
+        "options": [],
+        "query": "SELECT \n   product_type_id  AS __value,\n   CONCAT(product_type_name, ' (', SUM(case when active then 1 ELSE 0 end), ' active findings, ', SUM(case when active then severity_weight ELSE 0 end), ' index points)') AS __text\nFROM security_dashboard_data\nGROUP BY product_type_id, product_type_name\nORDER BY SUM(case when active then severity_weight ELSE 0 end) DESC",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": "NULL",
+        "current": {},
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "${DS_DEFECTDOJO_DB}"
+        },
+        "definition": "SELECT \n   product_id  AS __value,\n   CONCAT(product_name, ' (', SUM(case when active then 1 ELSE 0 end), ' active findings, ', SUM(case when active then severity_weight ELSE 0 end), ' index points)') AS __text\nFROM security_dashboard_data\nWHERE (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\nGROUP BY product_id, product_name\nORDER BY SUM(case when active then severity_weight ELSE 0 end) DESC",
+        "description": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Product",
+        "multi": true,
+        "name": "product",
+        "options": [],
+        "query": "SELECT \n   product_id  AS __value,\n   CONCAT(product_name, ' (', SUM(case when active then 1 ELSE 0 end), ' active findings, ', SUM(case when active then severity_weight ELSE 0 end), ' index points)') AS __text\nFROM security_dashboard_data\nWHERE (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\nGROUP BY product_id, product_name\nORDER BY SUM(case when active then severity_weight ELSE 0 end) DESC",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": "NULL",
+        "current": {},
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "${DS_DEFECTDOJO_DB}"
+        },
+        "definition": "SELECT \n   COALESCE(service, '--no repository--')  AS __value,\n   CONCAT(COALESCE(service, '--no repository--'), ' (', SUM(case when active then 1 ELSE 0 end), ' active findings, ', SUM(case when active then severity_weight ELSE 0 end), ' index points)') AS __text\nFROM security_dashboard_data\nWHERE (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n         AND (COALESCE($product) IS NULL OR product_id IN ($product))\nGROUP BY service\nORDER BY SUM(case when active then severity_weight ELSE 0 end) DESC",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Repository",
+        "multi": true,
+        "name": "service",
+        "options": [],
+        "query": "SELECT \n   COALESCE(service, '--no repository--')  AS __value,\n   CONCAT(COALESCE(service, '--no repository--'), ' (', SUM(case when active then 1 ELSE 0 end), ' active findings, ', SUM(case when active then severity_weight ELSE 0 end), ' index points)') AS __text\nFROM security_dashboard_data\nWHERE (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n         AND (COALESCE($product) IS NULL OR product_id IN ($product))\nGROUP BY service\nORDER BY SUM(case when active then severity_weight ELSE 0 end) DESC",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": "NULL",
+        "current": {},
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "${DS_DEFECTDOJO_DB}"
+        },
+        "definition": "SELECT COALESCE(component_name, '--no component--') AS __value, \nCONCAT(COALESCE(component_name, '--no component--'), ' (', SUM(case when active then 1 ELSE 0 end), ' active findings, ', SUM(case when active then severity_weight ELSE 0 end), ' index points)') AS __text\n         FROM security_dashboard_data\nWHERE (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n         AND (COALESCE($product) IS NULL OR product_id IN ($product))\n         AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\nGROUP BY component_name\nORDER BY SUM(case when active then severity_weight ELSE 0 end) DESC",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Component",
+        "multi": true,
+        "name": "component",
+        "options": [],
+        "query": "SELECT COALESCE(component_name, '--no component--') AS __value, \nCONCAT(COALESCE(component_name, '--no component--'), ' (', SUM(case when active then 1 ELSE 0 end), ' active findings, ', SUM(case when active then severity_weight ELSE 0 end), ' index points)') AS __text\n         FROM security_dashboard_data\nWHERE (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n         AND (COALESCE($product) IS NULL OR product_id IN ($product))\n         AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\nGROUP BY component_name\nORDER BY SUM(case when active then severity_weight ELSE 0 end) DESC",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": "NULL",
+        "current": {},
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "${DS_DEFECTDOJO_DB}"
+        },
+        "definition": "SELECT test_type_id as __value, \nCONCAT(test_type_name, ' (', SUM(case when active then 1 ELSE 0 end), ' active findings, ', SUM(case when active then severity_weight ELSE 0 end), ' index points)') AS __text\n         FROM security_dashboard_data\nWHERE (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n         AND (COALESCE($product) IS NULL OR product_id IN ($product))\n         AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\nGROUP BY test_type_id, test_type_name\nORDER BY SUM(case when active then severity_weight ELSE 0 end) DESC",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Tool",
+        "multi": true,
+        "name": "tool",
+        "options": [],
+        "query": "SELECT test_type_id as __value, \nCONCAT(test_type_name, ' (', SUM(case when active then 1 ELSE 0 end), ' active findings, ', SUM(case when active then severity_weight ELSE 0 end), ' index points)') AS __text\n         FROM security_dashboard_data\nWHERE (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n         AND (COALESCE($product) IS NULL OR product_id IN ($product))\n         AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\nGROUP BY test_type_id, test_type_name\nORDER BY SUM(case when active then severity_weight ELSE 0 end) DESC",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": "NULL",
+        "current": {},
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "${DS_DEFECTDOJO_DB}"
+        },
+        "definition": "SELECT severity_weight, severity as __value, \nCONCAT(severity, ' (', SUM(case when active then 1 ELSE 0 end), ' active findings, ', SUM(case when active then severity_weight ELSE 0 end), ' index points)') AS __text\n         FROM security_dashboard_data\nWHERE (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n         AND (COALESCE($product) IS NULL OR product_id IN ($product))\n         AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\nGROUP BY severity_weight, severity\nORDER BY severity_weight DESC, severity DESC",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Severity",
+        "multi": true,
+        "name": "severity",
+        "options": [],
+        "query": "SELECT severity_weight, severity as __value, \nCONCAT(severity, ' (', SUM(case when active then 1 ELSE 0 end), ' active findings, ', SUM(case when active then severity_weight ELSE 0 end), ' index points)') AS __text\n         FROM security_dashboard_data\nWHERE (COALESCE($product_type) IS NULL OR product_type_id IN ($product_type))\n         AND (COALESCE($product) IS NULL OR product_id IN ($product))\n         AND (COALESCE($service) IS NULL OR ('--no repository--' IN ($service) AND service IS NULL) OR service IN ($service))\nGROUP BY severity_weight, severity\nORDER BY severity_weight DESC, severity DESC",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "Days",
+          "value": "1d"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Group by",
+        "multi": false,
+        "name": "group_by",
+        "options": [
+          {
+            "selected": true,
+            "text": "Days",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "Weeks",
+            "value": "1w"
+          },
+          {
+            "selected": false,
+            "text": "Months",
+            "value": "1M"
+          },
+          {
+            "selected": false,
+            "text": "Quarters",
+            "value": "3M"
+          }
+        ],
+        "query": "Days : 1d,  Weeks : 1w, Months : 1M, Quarters : 3M",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "hide": 2,
+        "name": "defect_dojo_url",
+        "query": "${VAR_DEFECT_DOJO_URL}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_DEFECT_DOJO_URL}",
+          "text": "${VAR_DEFECT_DOJO_URL}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_DEFECT_DOJO_URL}",
+            "text": "${VAR_DEFECT_DOJO_URL}",
+            "selected": false
+          }
+        ]
+      }
+    ]
+  },
+  "time": {
+    "from": "now-2y",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Project security dashboard",
+  "uid": "51JfRJ34k",
+  "version": 369,
+  "weekStart": ""
+}
